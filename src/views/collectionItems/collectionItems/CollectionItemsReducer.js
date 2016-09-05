@@ -1,8 +1,13 @@
 import { createSelector } from 'reselect'
+import { put } from 'redux-saga/effects'
 import _sortBy from 'lodash/sortBy'
+
+import api from './CollectionItemsAPI'
 
 // ACTIONS
 export const FETCH_COLLECTION_ITEMS_REQUEST = '@@IND-COLLECTION_ITEMS/FETCH_COLLECTION_ITEMS_REQUEST'
+export const FETCH_COLLECTION_ITEMS_SUCCESS = '@@IND-COLLECTION_ITEMS/FETCH_COLLECTION_ITEMS_SUCCESS'
+export const FETCH_COLLECTION_ITEMS_FAILURE = '@@IND-COLLECTION_ITEMS/FETCH_COLLECTION_ITEMS_FAILURE'
 
 export const fetchCollectionItems = () => {
   console.log('fetch items')
@@ -20,48 +25,26 @@ export const fetchCollectionItems = () => {
   }
 }
 
+// SAGAS
+export function* sagaLoadCollectionItems() {
+  const items = yield api.fetchCollectionItems()
+  yield put({ type: FETCH_COLLECTION_ITEMS_REQUEST, payload: items })
+  // const items = yield fetchImages();
+  console.log('saga - ', items)
+}
+
 const collectionItemState = {
-  collectionItems: {
-    1: {
-      id: '1',
-      title: 'Rowan\'s Mohawk',
-      mainImage: {
-        url: 'https://avatars3.githubusercontent.com/u/9244507?s=250',
-        title: 'Rowan with his mohawk in the 70s',
-      },
-      date: '1974',
-    },
-    2: {
-      id: '2',
-      title: 'Nick the professional',
-      mainImage: {
-        url: 'https://avatars0.githubusercontent.com/u/15827526?s=250',
-        title: 'Nick with his professional Mahuki photo',
-      },
-      date: '2016',
-    },
-    3: {
-      id: '3',
-      title: 'Craig the rebel',
-      mainImage: {
-        url: 'https://avatars0.githubusercontent.com/u/6902746?s=250',
-        title: 'Craig in the style of cubism',
-      },
-      date: '2014',
-    },
-  },
-  defaultOrder: ['2', '3', '1'],
+  collectionItems: {},
+  defaultOrder: [],
 }
 
 export const CollectionItemsReducer = (state = collectionItemState, action) => {
   switch (action.type) {
     case FETCH_COLLECTION_ITEMS_REQUEST:
+      const order = Object.keys(action.payload)
       return {
-        collectionItems: {
-          ...state.collectionItems,
-          [action.payload.id]: action.payload,
-        },
-        defaultOrder: [...state.defaultOrder, action.payload.id],
+        collectionItems: action.payload,
+        defaultOrder: order,
       }
     default:
       return state
