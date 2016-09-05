@@ -1,6 +1,25 @@
 import { createSelector } from 'reselect'
 import _sortBy from 'lodash/sortBy'
 
+// ACTIONS
+export const FETCH_COLLECTION_ITEMS_REQUEST = '@@IND-COLLECTION_ITEMS/FETCH_COLLECTION_ITEMS_REQUEST'
+
+export const fetchCollectionItems = () => {
+  console.log('fetch items')
+  return {
+    type: FETCH_COLLECTION_ITEMS_REQUEST,
+    payload: {
+      id: '4',
+      title: 'Action Fired!',
+      mainImage: {
+        url: 'https://avatars0.githubusercontent.com/u/4032175?s=250',
+        title: 'Balh',
+      },
+      date: '2222',
+    },
+  }
+}
+
 const collectionItemState = {
   collectionItems: {
     1: {
@@ -36,6 +55,14 @@ const collectionItemState = {
 
 export const CollectionItemsReducer = (state = collectionItemState, action) => {
   switch (action.type) {
+    case FETCH_COLLECTION_ITEMS_REQUEST:
+      return {
+        collectionItems: {
+          ...state.collectionItems,
+          [action.payload.id]: action.payload,
+        },
+        defaultOrder: [...state.defaultOrder, action.payload.id],
+      }
     default:
       return state
   }

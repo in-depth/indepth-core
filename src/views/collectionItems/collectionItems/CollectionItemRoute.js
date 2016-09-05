@@ -1,11 +1,12 @@
 import React from 'react'
 
-import { CollectionItemsListContainer } from './index'
+import { CollectionItemsListContainer, GetCollectionItemsButton } from './index'
 
 const CollectionItemsRoute = (props) => {
   return (
     <div>
       <CollectionItemsListContainer orderBy={props.location.query.orderBy} />
+      <GetCollectionItemsButton />
     </div>
   )
 }
