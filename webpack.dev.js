@@ -61,9 +61,11 @@ const webpackconfig = {
   ],
 }
 
-var complier = webpack(webpackconfig)
+const complier = webpack(webpackconfig)
 
-complier.run(function(err,stats) {
+/* eslint-disable */
+complier.run((err, stats) => {
   console.log(err)
   console.log(stats)
 })
+/* eslint-enable */

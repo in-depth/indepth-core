@@ -4,16 +4,13 @@ import Express from 'express'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
-import routes from '../src/shared/views/routes'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
-
+import routes from '../src/shared/views/routes'
 import NotFoundPage from '../src/shared/views/PageNotFound/PageNotFound'
 import rootReducer from '../src/shared/views/rootReducer'
 
-
-// initialize the server and configure support for ejs templates
 const app = new Express()
 const server = new Server(app)
 
@@ -27,7 +24,6 @@ app.get('*', (req, res) => {
   match(
     { routes, location: req.url },
     (err, redirectLocation, renderProps) => {
-
       // in case of error display the error message
       if (err) {
         return res.status(500).send(err.message)
@@ -44,16 +40,16 @@ app.get('*', (req, res) => {
         // if the current route matched we have renderProps
         markup = renderToString(
           <Provider store={store}>
-            <RouterContext {...renderProps}/>
+            <RouterContext {...renderProps} />
           </Provider>)
       } else {
         // otherwise we can render a 404 page
-        markup = renderToString(<NotFoundPage/>)
+        markup = renderToString(<NotFoundPage />)
         res.status(404)
       }
 
       // render the index template with the embedded React markup
-      res.send(renderFullPage(markup, initialState))
+      return res.send(renderFullPage(markup, initialState))
     }
   )
 })
@@ -81,13 +77,11 @@ function renderFullPage(html, preloadedState) {
     `
 }
 
-
-// start the server
 const port = process.env.PORT || 3000
 const env = process.env.NODE_ENV || 'production'
 server.listen(port, err => {
   if (err) {
     return console.error(err)
   }
-  console.info(`Server running on http://localhost:${port} [${env}]`)
+    return console.info(`Server running on http://localhost:${port} [${env}]`)
 })

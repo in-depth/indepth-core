@@ -4,7 +4,7 @@
   "description": "In-depth core",
   "main": "index.js",
   "scripts": {
-    "start": "node --harmony webpack.dev.js",
+    "start": "node --harmony webpack.dev.js && npm run start-server",
     "start-server": "node_modules/.bin/babel-node --presets 'react,es2015' server/server.js",
     "build": "cross-env NODE_ENV=production webpack -p --config webpack.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -48,6 +48,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "express": "^4.14.0",
     "lodash": "^4.15.0",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
