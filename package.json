@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node --harmony webpack.dev.js",
+    "start-server": "node_modules/.bin/babel-node --presets 'react,es2015' server/server.js",
     "build": "cross-env NODE_ENV=production webpack -p --config webpack.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "sourcemapexplorer": "source-map-explorer ./build/app.*.js ./build/app.*.js.map && source-map-explorer ./build/vendor.*.js ./build/vendor.*.js.map"
