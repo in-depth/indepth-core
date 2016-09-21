@@ -1,4 +1,8 @@
-# Logs
+# Indepth-core
+babel_cache
+dist
+
+#Logs
 logs
 *.log
 npm-debug.log*
@@ -38,5 +42,3 @@ jspm_packages
 
 # DS Store
 .DS_Store
-
-babel_cache

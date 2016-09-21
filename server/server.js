@@ -1,6 +1,6 @@
 import path from 'path'
 import { Server } from 'http'
-import Express from 'express'
+import Express from 'express' // eslint-disable-line
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
